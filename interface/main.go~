@@ -1,0 +1,49 @@
+package main
+import(
+	"fmt"
+	"math"
+)
+type Shape interface{
+	Area() float64
+	Perimeter() float64
+}
+type Rect struct {
+	width float64
+	height float64
+}
+type Circle struct {
+	radius float64
+}
+
+func (r Rect) Area() float64{
+	return r.width * r.height
+}
+func (r Rect) Perimeter() float64{
+	return 2*(r.width + r.height)
+}
+func (c Circle) Area() float64{
+	return math.Pi * c.radius * c.radius
+}
+func (c Circle) Perimeter() float64{
+	return 2*math.Pi*c.radius
+}
+func TotalArea(shapes ...Shape) float64{
+	total :=0.0
+	for _, s := range shapes{
+		total +=s.Area()
+	}
+	return total
+}
+//function main
+func main(){
+	var s Shape = Rect{1,2}
+	fmt.Printf("v=%v,type=%T\n",s,s)
+	fmt.Printf("area=%0.2f\n\n",s.Area());
+
+	var s1 Shape  = Circle{10}
+	fmt.Printf("v=%v,type=%T\n",s,s)
+	fmt.Printf("area=%0.2f\n\n",s.Area());
+
+	total:=TotalArea(s, s1)
+	fmt.Printf("total=%v type=%T\n",total)
+}
